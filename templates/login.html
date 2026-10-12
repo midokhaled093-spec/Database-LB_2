@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <h1>Log in</h1>
+
+  {% if errors.get('general') %}
+    <p class="banner banner-error">{{ errors.get('general') }}</p>
+  {% endif %}
+
+  <form id="login-form" action="{{ url_for('login') }}" method="POST" novalidate>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" value="{{ form.get('email', '') }}">
+      <span class="field-error" id="email-error">{{ errors.get('email', '') }}</span>
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password">
+      <span class="field-error" id="password-error">{{ errors.get('password', '') }}</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Log in</button>
+  </form>
+
+  <p class="auth-switch">No account yet? <a href="{{ url_for('register') }}">Register</a></p>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/validate.js') }}"></script>
+{% endblock %}

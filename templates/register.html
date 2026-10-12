@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <h1>Create account</h1>
+
+  {% if errors.get('email') == 'Email Already Exists' %}
+    <p class="banner banner-error">Email Already Exists</p>
+  {% endif %}
+
+  <form id="register-form" action="{{ url_for('register') }}" method="POST" novalidate>
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" value="{{ form.get('name', '') }}">
+      <span class="field-error" id="name-error">{{ errors.get('name', '') }}</span>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" value="{{ form.get('email', '') }}">
+      <span class="field-error" id="email-error">{% if errors.get('email') != 'Email Already Exists' %}{{ errors.get('email', '') }}{% endif %}</span>
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password">
+      <span class="field-error" id="password-error">{{ errors.get('password', '') }}</span>
+    </div>
+
+    <div class="field">
+      <label for="confirm_password">Confirm password</label>
+      <input type="password" id="confirm_password" name="confirm_password">
+      <span class="field-error" id="confirm_password-error">{{ errors.get('confirm_password', '') }}</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+
+  <p class="auth-switch">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/validate.js') }}"></script>
+{% endblock %}
